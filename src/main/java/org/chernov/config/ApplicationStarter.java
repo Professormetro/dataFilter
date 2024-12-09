@@ -16,35 +16,36 @@ import org.chernov.writer.FileWriter;
 import org.chernov.writer.WriteToFileByType;
 
 public class ApplicationStarter {
-    ListsByTypes listsByTypes = new ListsByTypes();
-    TempListsByTypes tempListsByTypes = new TempListsByTypes();
-    UtilConfig utilConfig = new UtilConfig();
+    static ListsByTypes listsByTypes = new ListsByTypes();
+    static TempListsByTypes tempListsByTypes = new TempListsByTypes();
+    static UtilConfig utilConfig = new UtilConfig();
 
-    DataTypeFilter dataTypeFilter = new DataTypeFilterImplementation();
-    InputFilesFilter inputFilesFilter = new InputFilesFilterImplementation(utilConfig);
-    ProcessFiles processFiles = new ValidateAndProcessFiles(listsByTypes, tempListsByTypes, dataTypeFilter, inputFilesFilter, utilConfig);
+    static DataTypeFilter dataTypeFilter = new DataTypeFilterImplementation();
+    static InputFilesFilter inputFilesFilter = new InputFilesFilterImplementation(utilConfig);
+    static ProcessFiles processFiles = new ValidateAndProcessFiles(listsByTypes, tempListsByTypes, dataTypeFilter, inputFilesFilter, utilConfig);
 
-    PrintStatisticsByType printStatisticsByType = new StatisticsPrinter(listsByTypes, utilConfig);
-    WriteToFileByType writeToFileByType = new FileWriter(utilConfig);
-    LoadingProgressbar progressbar = new LoadingProgressbar();
+    static PrintStatisticsByType printStatisticsByType = new StatisticsPrinter(listsByTypes, utilConfig);
+    static WriteToFileByType writeToFileByType = new FileWriter(utilConfig);
+    static LoadingProgressbar progressbar = new LoadingProgressbar();
 
-    public TempListsByTypes getTempListsByTypes() {
+    public static TempListsByTypes getTempListsByTypes() {
         return tempListsByTypes;
     }
 
-    public void filterFiles(String[] args){
-        progressbar.printProgressBar("Filtering files: ", 80, 1000);
+    public static void filterFiles(String[] args){
         inputFilesFilter.parseArgs(args);
         processFiles.validateInput();
+        progressbar.printProgressBar("Filtering files: ", 80, 1000);
     }
 
-    public void writeToFiles(){
-        progressbar.printProgressBar("Writing filtered data to files", 80, 1000);
+    public static void writeToFiles(){
+
         writeToFileByType.writeToFile("integers.txt", tempListsByTypes.getIntegers());
         writeToFileByType.writeToFile("floats.txt", tempListsByTypes.getFloats());
         writeToFileByType.writeToFile("strings.txt", tempListsByTypes.getStrings());
+        progressbar.printProgressBar("Writing filtered data to files", 80, 1000);
     }
-    public void printStatistics(){
+    public static void printStatistics(){
         printStatisticsByType.printStatisticsByType();
     }
 }

@@ -2,8 +2,6 @@ package org.chernov.checker;
 
 import org.chernov.StartApplication;
 
-import java.util.Scanner;
-
 public class InputCheck {
 
     public static boolean checkIfProceedFilteringFiles() {

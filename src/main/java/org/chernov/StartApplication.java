@@ -18,27 +18,32 @@ public class StartApplication {
             args = newArgs;
         }
 
-        ApplicationStarter starter = new ApplicationStarter();
-        starter.filterFiles(args);
-        starter.writeToFiles();
+        ApplicationStarter.filterFiles(args);
+        ApplicationStarter.writeToFiles();
+
+//        ApplicationStarter starter = new ApplicationStarter();
+//
+//
+//        starter.filterFiles(args);
+//        starter.writeToFiles();
 
         System.out.println("\nFiles was successfully filtered!");
 
         boolean proceed = InputCheck.checkIfProceedFilteringFiles();
         while(proceed) {
             System.out.println("Enter new fileNames to proceed filtering: ");
-            String newFileInput = scanner.nextLine();
-            String[] newArgs = newFileInput.split("\\s+");
-            starter.getTempListsByTypes().setListsToDefault();
+            String newInput = scanner.nextLine();
+            String[] newArgs = newInput.split("\\s+");
+            ApplicationStarter.getTempListsByTypes().setListsToDefault();
 
-            starter.filterFiles(newArgs);
-            starter.writeToFiles();
+            ApplicationStarter.filterFiles(newArgs);
+            ApplicationStarter.writeToFiles();
 
             System.out.println("Added files was successfully filtered!");
             proceed = InputCheck.checkIfProceedFilteringFiles();
         }
 
-        starter.printStatistics();
+        ApplicationStarter.printStatistics();
 
         System.out.println("\nDataFilter has finished...");
         scanner.close();

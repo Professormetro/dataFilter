@@ -1,11 +1,15 @@
 package org.chernov.fileFilter;
 
+import org.chernov.checker.OutputPath;
+import org.chernov.config.ApplicationStarter;
 import org.chernov.process.ProcessFiles;
 import org.chernov.utils.UtilConfig;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.chernov.StartApplication.scanner;
 
 public class InputFilesFilterImplementation implements InputFilesFilter {
 
@@ -29,6 +33,15 @@ public class InputFilesFilterImplementation implements InputFilesFilter {
             switch(argsList.get(i)){
                 case "-o":
                     config.setOutputPath(argsList.get(i + 1));
+                    if(!OutputPath.checkIfRightOutputPath(argsList.get(i + 1))){
+                        System.out.println("The output path is incorrect, try again with path in format [newDir/newDir] or [newDir]: ");
+                        String newInput = scanner.nextLine();
+                        String[] newArgs = newInput.split("\\s+");
+                        ApplicationStarter.getTempListsByTypes().setListsToDefault();
+
+                        ApplicationStarter.filterFiles(newArgs);
+                        ApplicationStarter.writeToFiles();
+                    };
                     argsList.remove(i);
                     argsList.remove(i);
                     i--;
