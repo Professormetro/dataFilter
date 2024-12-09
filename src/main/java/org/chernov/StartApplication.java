@@ -1,52 +1,31 @@
 package org.chernov;
 
-import org.chernov.checker.InputCheck;
+import org.chernov.utils.NewArgs;
+import org.chernov.utils.UtilConfig;
+import org.chernov.validation.ArgsFilesValidator;
+import org.chernov.validation.Proceed;
 import org.chernov.config.ApplicationStarter;
+import org.chernov.utils.ArgsAndListsByTypes;
 
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class StartApplication {
-    public static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
 
-        if (args.length == 0) {
-            System.out.println("\nError: you entered a blank line!");
+    public static void main(String[] args){
+
+        ArgsAndListsByTypes.getArgs().addAll(Arrays.asList(args));
+
+        if (ArgsAndListsByTypes.getArgs() == null || ArgsAndListsByTypes.getArgs().isEmpty()) {
+            System.out.println("\n  Error: you entered a blank line!");
             System.out.println("Try to enter data one more time(separate flags and fileNames by space): ");
-            String input = StartApplication.scanner.nextLine();
-            String[] newArgs = input.split("\\s+");
-            args = newArgs;
+            NewArgs.deletePreviousArgsAndInputNew();
         }
 
-        ApplicationStarter.filterFiles(args);
-        ApplicationStarter.writeToFiles();
+        ArgsFilesValidator.userErrorIfNotContainsTxt(ArgsAndListsByTypes.getArgs());
 
-//        ApplicationStarter starter = new ApplicationStarter();
-//
-//
-//        starter.filterFiles(args);
-//        starter.writeToFiles();
-
-        System.out.println("\nFiles was successfully filtered!");
-
-        boolean proceed = InputCheck.checkIfProceedFilteringFiles();
-        while(proceed) {
-            System.out.println("Enter new fileNames to proceed filtering: ");
-            String newInput = scanner.nextLine();
-            String[] newArgs = newInput.split("\\s+");
-            ApplicationStarter.getTempListsByTypes().setListsToDefault();
-
-            ApplicationStarter.filterFiles(newArgs);
-            ApplicationStarter.writeToFiles();
-
-            System.out.println("Added files was successfully filtered!");
-            proceed = InputCheck.checkIfProceedFilteringFiles();
-        }
-
-        ApplicationStarter.printStatistics();
-
-        System.out.println("\nDataFilter has finished...");
-        scanner.close();
+        ApplicationStarter starter = new ApplicationStarter();
+        starter.startApplication(ArgsAndListsByTypes.getArgs());
     }
 
 }

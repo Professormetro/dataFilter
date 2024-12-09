@@ -1,5 +1,6 @@
 package org.chernov.writer;
 
+import org.chernov.progressBar.LoadingProgressbar;
 import org.chernov.utils.UtilConfig;
 
 import java.io.BufferedWriter;
@@ -21,6 +22,7 @@ public class FileWriter implements WriteToFileByType {
 
     @Override
     public void writeToFile(String filename, List<?> data) {
+
         if (data.isEmpty()) return;
 
         createDirectoryIfNotExists(config.getOutputPath());
@@ -36,6 +38,7 @@ public class FileWriter implements WriteToFileByType {
         } catch (IOException e) {
             System.err.println("Error writing to file: " + pathToFile);
         }
+
     }
 
     private void createDirectoryIfNotExists(String outputPath) {

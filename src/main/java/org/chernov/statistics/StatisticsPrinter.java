@@ -1,16 +1,16 @@
 package org.chernov.statistics;
 
-import org.chernov.utils.ListsByTypes;
+import org.chernov.utils.ArgsAndListsByTypes;
 import org.chernov.utils.UtilConfig;
 import java.util.Collections;
 
 
 public class StatisticsPrinter implements PrintStatisticsByType{
 
-    private final ListsByTypes listsByTypes;
+    private final ArgsAndListsByTypes listsByTypes;
     private final UtilConfig config;
 
-    public StatisticsPrinter(ListsByTypes listsByTypes, UtilConfig config) {
+    public StatisticsPrinter(ArgsAndListsByTypes listsByTypes, UtilConfig config) {
         this.listsByTypes = listsByTypes;
         this.config = config;
     }

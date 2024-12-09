@@ -1,7 +1,9 @@
 package org.chernov.utils;
 
-public class UtilConfig {
+import java.util.Scanner;
 
+public class UtilConfig {
+    public static Scanner scanner = new Scanner(System.in);
     private String DEFAULT_PREFIX = "";
     private String DEFAULT_PATH = ".";
 
@@ -18,22 +20,6 @@ public class UtilConfig {
         this.append = false;
         this.shortStats = false;
         this.fullStats = false;
-    }
-
-    public String getDEFAULT_PREFIX() {
-        return DEFAULT_PREFIX;
-    }
-
-    public void setDEFAULT_PREFIX(String DEFAULT_PREFIX) {
-        this.DEFAULT_PREFIX = DEFAULT_PREFIX;
-    }
-
-    public String getDEFAULT_PATH() {
-        return DEFAULT_PATH;
-    }
-
-    public void setDEFAULT_PATH(String DEFAULT_PATH) {
-        this.DEFAULT_PATH = DEFAULT_PATH;
     }
 
     public String getOutputPath() {

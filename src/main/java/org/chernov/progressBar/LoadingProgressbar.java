@@ -2,11 +2,11 @@ package org.chernov.progressBar;
 
 public class LoadingProgressbar {
 
-    public void printProgressBar(String message, int length, long totalTime) {
+    public static void printProgressBar(String message, int length, long totalTime) {
         char incomplete = '░';
         char complete = '█';
 
-        System.out.println("\n" + message + ": ");
+        System.out.println("\n" + message);
 
         for (int i = 0; i <= length; i++) {
             StringBuilder bar = new StringBuilder();

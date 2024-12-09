@@ -1,69 +1,74 @@
 package org.chernov.process;
 
-import org.chernov.StartApplication;
 import org.chernov.dataTypeFilter.DataTypeFilter;
-import org.chernov.utils.ListsByTypes;
+import org.chernov.progressBar.LoadingProgressbar;
+import org.chernov.utils.ArgsAndListsByTypes;
+import org.chernov.utils.NewArgs;
 import org.chernov.utils.TempListsByTypes;
 import org.chernov.utils.UtilConfig;
-import org.chernov.fileFilter.InputFilesFilter;
+import org.chernov.fileFilter.ArgsFilter;
+import org.chernov.validation.ArgsFilesValidator;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ValidateAndProcessFiles  implements ProcessFiles{
-    private final ListsByTypes listsByType;
+    private final ArgsAndListsByTypes listsByType;
     private final TempListsByTypes tempListsByTypes;
     private final DataTypeFilter dataTypeFilter;
-    private final InputFilesFilter inputFilesFilter;
+    private final ArgsFilter argsFilter;
     private final UtilConfig utilConfig;
 
-    public ValidateAndProcessFiles(ListsByTypes listsByType, TempListsByTypes tempListsByTypes, DataTypeFilter dataTypeFilter,
-                                   InputFilesFilter inputFilesFilter, UtilConfig utilConfig) {
+    public ValidateAndProcessFiles(ArgsAndListsByTypes listsByType, TempListsByTypes tempListsByTypes, DataTypeFilter dataTypeFilter,
+                                   ArgsFilter argsFilter, UtilConfig utilConfig) {
         this.listsByType = listsByType;
         this.tempListsByTypes = tempListsByTypes;
         this.dataTypeFilter = dataTypeFilter;
-        this.inputFilesFilter = inputFilesFilter;
+        this.argsFilter = argsFilter;
         this.utilConfig = utilConfig;
     }
 
-
-
     @Override
-    public void validateInput() {
-        String[] args = inputFilesFilter.getUpdatedArgs();
+    public void validateInput(ArrayList<String> filteredArgs){
+
         boolean validInput = false;
 
         while (!validInput) {
             validInput = true;
 
-            for (String filename : args) {
+            for (String filename : filteredArgs) {
                 if (filename.endsWith(".txt")) {
                     try {
                         processFileByName(filename);
+                        LoadingProgressbar.printProgressBar("Filtering file " + filename + " by types...", 70, 1000);
+                        validInput = true;
                     } catch (Exception e) {
-                        System.err.println("\nError while reading and processing file " + filename + ": " + e.getMessage());
+                        System.err.println("\n  Error: while reading and processing file " + filename + ": " + e.getMessage());
                         utilConfig.setConfigToDefault();
+
                         validInput = false;
                     }
                 } else if (filename.matches(".*\\.\\p{L}{2,5}")) {
-                    System.err.println("\n  File " + filename + " has incorrect extension, our app is only working with .txt files(((");
+                    System.err.println("\n  Error: File " + filename + " has incorrect extension, our app is only working with .txt files");
                     validInput = false;
                 }else{
-                    System.err.println("\n  You entered an invalid file, please try again.");
+                    System.err.println("\n  Error: You entered an invalid file " + filename + ", please try again.");
                     validInput = false;
                 }
             }
 
             if (!validInput) {
                 System.out.println("\nTry to enter data one more time(separate flags and fileNames by space): ");
-                String input = StartApplication.scanner.nextLine();
-                String[] newArgs = input.split("\\s+");
-                inputFilesFilter.parseArgs(newArgs);
-                args = newArgs;
+                NewArgs.deletePreviousArgsAndInputNew();
+                argsFilter.parseArgs(ArgsAndListsByTypes.getArgs());
             }
+
         }
+
     }
+
 
     @Override
     public void processFileByName(String filename)  {
@@ -83,7 +88,7 @@ public class ValidateAndProcessFiles  implements ProcessFiles{
                         tempListsByTypes.getStrings().add(line);
                     }
                 } catch (NumberFormatException e) {
-                    // Пропускаем строку, если она не может быть преобразована в нужный тип
+                    // Пропускаем строку, если не можем преобразовать ее к нужному типу
                 }
             }
         } catch (IOException e) {
