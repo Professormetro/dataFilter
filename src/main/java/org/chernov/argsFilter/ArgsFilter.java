@@ -1,4 +1,4 @@
-package org.chernov.fileFilter;
+package org.chernov.argsFilter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.chernov.dataTypeFilter;
+package org.chernov.dataTypesFilter;
 
 import java.util.regex.Pattern;
 

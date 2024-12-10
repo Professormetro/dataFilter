@@ -2,7 +2,7 @@ package org.chernov.validation;
 
 import java.util.regex.Pattern;
 
-public class ArgsFlagsValidation {
+public class FlagsInArgsValidator {
 
     private static final String OUTPUTPATH_AND_PREFIX_VALID = "^(?!/)(?!.*\\\\)(?!-p|-[o|f|s|a]).+(/.*)?$";
 

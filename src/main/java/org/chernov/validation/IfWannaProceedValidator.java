@@ -1,34 +1,33 @@
 package org.chernov.validation;
 
-import org.chernov.config.ApplicationStarter;
 import org.chernov.statistics.PrintStatisticsByType;
-import org.chernov.statistics.StatisticsPrinter;
-import org.chernov.utils.UtilConfig;
 
-public class Proceed {
+import java.util.Scanner;
+
+public class IfWannaProceedValidator {
 
     private final PrintStatisticsByType printer;
+    private final Scanner scanner = new Scanner(System.in);
 
-    public Proceed(PrintStatisticsByType printer) {
+    public IfWannaProceedValidator(PrintStatisticsByType printer) {
         this.printer = printer;
     }
 
     public boolean checkIfProceedFilteringFiles() {
-        System.out.print("\nDo you want to filtered more files in this session [Y/N]:");
 
         boolean wannaProceed = false;
         boolean inputValid = false;
 
-        while(!inputValid) {
+        while (!inputValid) {
 
-            String userInput = UtilConfig.scanner.nextLine().trim().toUpperCase();
+            System.out.print("\nDo you want to filtered more files in this session [Y/N]:");
+            String userInput = scanner.nextLine().trim().toUpperCase();
 
             switch (userInput) {
                 case "Y":
                     wannaProceed = true;
                     inputValid = true;
                     break;
-
                 case "N":
                     printer.printStatisticsByType();
                     System.out.println("\nFiles were successfully filtered!");
@@ -39,8 +38,8 @@ public class Proceed {
                 default:
                     System.out.print("You entered incorrect char. Please enter [Y/N]:");
             }
-        }
 
+        }
         return wannaProceed;
     }
 }

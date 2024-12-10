@@ -1,7 +1,7 @@
 package org.chernov.statistics;
 
 import org.chernov.utils.ArgsAndListsByTypes;
-import org.chernov.utils.UtilConfig;
+import org.chernov.utils.FlagsConfig;
 import java.util.Collections;
 
 
@@ -15,9 +15,9 @@ public class StatisticsPrinter implements PrintStatisticsByType{
 
     @Override
     public void printStatisticsByType() {
-        if (UtilConfig.isShortStats()) {
+        if (FlagsConfig.isShortStats()) {
             printShortStatistics();
-        } else if (UtilConfig.isFullStats()) {
+        } else if (FlagsConfig.isFullStats()) {
             printFullStatistics();
         }
     }

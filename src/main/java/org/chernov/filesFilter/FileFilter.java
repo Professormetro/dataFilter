@@ -1,39 +1,36 @@
-package org.chernov.process;
+package org.chernov.filesFilter;
 
-import org.chernov.dataTypeFilter.DataTypeFilter;
-import org.chernov.progressBar.LoadingProgressbar;
+import org.chernov.dataTypesFilter.DataTypeFilter;
+import org.chernov.utils.LoadingProgressbar;
 import org.chernov.utils.ArgsAndListsByTypes;
-import org.chernov.utils.NewArgs;
+import org.chernov.utils.DeleteDataAndRestartApp;
 import org.chernov.utils.TempListsByTypes;
-import org.chernov.utils.UtilConfig;
-import org.chernov.fileFilter.ArgsFilter;
-import org.chernov.validation.ArgsFilesValidator;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ValidateAndProcessFiles  implements ProcessFiles{
+public class FileFilter implements ProcessFiles{
     private final ArgsAndListsByTypes listsByType;
     private final TempListsByTypes tempListsByTypes;
     private final DataTypeFilter dataTypeFilter;
 
-    public ValidateAndProcessFiles(ArgsAndListsByTypes listsByType, TempListsByTypes tempListsByTypes, DataTypeFilter dataTypeFilter) {
+    public FileFilter(ArgsAndListsByTypes listsByType, TempListsByTypes tempListsByTypes, DataTypeFilter dataTypeFilter) {
         this.listsByType = listsByType;
         this.tempListsByTypes = tempListsByTypes;
         this.dataTypeFilter = dataTypeFilter;
     }
 
     @Override
-    public void validateInput(ArrayList<String> filteredArgs) {
-        for (String filename : filteredArgs) {
+    public void filterFilesOrThrowException(ArrayList<String> filteredArgs) {
+        for (int i =0; i < filteredArgs.size(); i++) {
             try {
-                filterFileByName(filename);
-                LoadingProgressbar.printProgressBar("Filtering file " + filename + " by types...", 70, 1000);
+                filterFileByName(filteredArgs.get(i));
             } catch (Exception e) {
-                System.err.println("\n  Error: while reading and processing file " + filename + ": " + e.getMessage());
-                NewArgs.deletePreviousArgsAndInputNew();
+                System.err.println("\n  Error: while reading and processing file " + filteredArgs.get(i) + ": " + e.getMessage());
+                System.out.println("\nTry to enter data one more time(separate flags and fileNames by space): ");
+                DeleteDataAndRestartApp.deletePreviousArgsAndInputNew();
             }
         }
     }
@@ -70,6 +67,7 @@ public class ValidateAndProcessFiles  implements ProcessFiles{
         } catch (IOException e) {
             throw new RuntimeException("It may not exist!", e);
         }
+        LoadingProgressbar.printProgressBar("Filtering file " + filename + " by types...", 70, 1000);
     }
 }
 

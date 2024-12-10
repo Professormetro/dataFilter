@@ -1,11 +1,10 @@
-package org.chernov.process;
+package org.chernov.filesFilter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public interface ProcessFiles {
 
-    void validateInput(ArrayList<String> filteredArgs);
+    void filterFilesOrThrowException(ArrayList<String> filteredArgs);
     void filterFileByName(String filename);
 
 }

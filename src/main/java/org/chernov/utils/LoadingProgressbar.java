@@ -1,4 +1,4 @@
-package org.chernov.progressBar;
+package org.chernov.utils;
 
 public class LoadingProgressbar {
 

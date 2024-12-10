@@ -1,9 +1,6 @@
 package org.chernov.utils;
 
-import java.util.Scanner;
-
-public class UtilConfig {
-    public static Scanner scanner = new Scanner(System.in);
+public class FlagsConfig {
     private final static String DEFAULT_PREFIX = "";
     private final static String DEFAULT_PATH = ".";
 
