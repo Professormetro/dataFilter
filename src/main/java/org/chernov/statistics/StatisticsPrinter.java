@@ -8,20 +8,16 @@ import java.util.Collections;
 public class StatisticsPrinter implements PrintStatisticsByType{
 
     private final ArgsAndListsByTypes listsByTypes;
-    private final UtilConfig config;
 
-    public StatisticsPrinter(ArgsAndListsByTypes listsByTypes, UtilConfig config) {
+    public StatisticsPrinter(ArgsAndListsByTypes listsByTypes) {
         this.listsByTypes = listsByTypes;
-        this.config = config;
     }
-
-
 
     @Override
     public void printStatisticsByType() {
-        if (config.isShortStats()) {
+        if (UtilConfig.isShortStats()) {
             printShortStatistics();
-        } else if (config.isFullStats()) {
+        } else if (UtilConfig.isFullStats()) {
             printFullStatistics();
         }
     }

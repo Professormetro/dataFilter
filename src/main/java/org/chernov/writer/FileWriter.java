@@ -14,23 +14,17 @@ import java.util.List;
 
 public class FileWriter implements WriteToFileByType {
 
-    private final UtilConfig config;
-
-    public FileWriter(UtilConfig config) {
-        this.config = config;
-    }
-
     @Override
     public void writeToFile(String filename, List<?> data) {
 
         if (data.isEmpty()) return;
 
-        createDirectoryIfNotExists(config.getOutputPath());
+        createDirectoryIfNotExists(UtilConfig.getOutputPath());
 
         StringBuilder pathToFile = new StringBuilder();
-        pathToFile.append(config.getOutputPath() + File.separator + config.getPrefix() + filename);
+        pathToFile.append(UtilConfig.getOutputPath() + File.separator + UtilConfig.getPrefix() + filename);
 
-        try (BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(pathToFile.toString(), config.isAppend()))) {
+        try (BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(pathToFile.toString(), UtilConfig.isAppend()))) {
             for (Object item : data) {
                 writer.write(item.toString());
                 writer.newLine();

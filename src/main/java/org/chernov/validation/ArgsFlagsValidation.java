@@ -4,23 +4,22 @@ import java.util.regex.Pattern;
 
 public class ArgsFlagsValidation {
 
-    private static final String PATH_REGEX = "^(?!/)(?!.*\\\\).+(/.*)?$";
-    private static final String PREFIX_REGEX = "^(?!-)[^<>:\"/\\\\|?*]+$";
+    private static final String OUTPUTPATH_AND_PREFIX_VALID = "^(?!/)(?!.*\\\\)(?!-p|-[o|f|s|a]).+(/.*)?$";
 
     public static boolean checkIfRightOutputPath(String outputPath) {
-        if (outputPath == null || outputPath.trim().isEmpty()) {
+        if (outputPath == null || outputPath.trim().isEmpty()|| outputPath.endsWith(".txt")) {
             return false;
         }
-        return Pattern.matches(PATH_REGEX, outputPath);
+        return Pattern.matches(OUTPUTPATH_AND_PREFIX_VALID, outputPath);
 
     }
 
     public static boolean checkIfRightPrefix(String prefix) {
 
-        if (prefix == null || prefix.trim().isEmpty()) {
+        if (prefix == null || prefix.trim().isEmpty() || prefix.endsWith(".txt")) {
             return false;
         }
 
-        return Pattern.matches(PREFIX_REGEX, prefix);
+        return Pattern.matches(OUTPUTPATH_AND_PREFIX_VALID, prefix);
     }
 }

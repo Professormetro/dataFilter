@@ -6,6 +6,6 @@ import java.util.List;
 public interface ProcessFiles {
 
     void validateInput(ArrayList<String> filteredArgs);
-    void processFileByName(String filename);
+    void filterFileByName(String filename);
 
 }

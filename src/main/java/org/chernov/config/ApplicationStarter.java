@@ -1,13 +1,12 @@
 package org.chernov.config;
+
 import org.chernov.utils.NewArgs;
-import org.chernov.validation.ArgsFilesValidator;
 import org.chernov.validation.Proceed;
 import org.chernov.dataTypeFilter.DataTypeFilter;
 import org.chernov.dataTypeFilter.DataTypeFilterImplementation;
 import org.chernov.progressBar.LoadingProgressbar;
 import org.chernov.utils.ArgsAndListsByTypes;
 import org.chernov.utils.TempListsByTypes;
-import org.chernov.utils.UtilConfig;
 import org.chernov.fileFilter.ArgsFilter;
 import org.chernov.fileFilter.FilterArgsAndDeleteFlags;
 import org.chernov.process.ProcessFiles;
@@ -21,14 +20,13 @@ import java.util.List;
 public class ApplicationStarter {
     private ArgsAndListsByTypes listsByTypes = new ArgsAndListsByTypes();
     private TempListsByTypes tempListsByTypes = new TempListsByTypes();
-    private UtilConfig utilConfig = new UtilConfig();
 
     private DataTypeFilter dataTypeFilter = new DataTypeFilterImplementation();
-    private ArgsFilter argsFilter = new FilterArgsAndDeleteFlags(utilConfig);
-    private ProcessFiles processFiles = new ValidateAndProcessFiles(listsByTypes, tempListsByTypes, dataTypeFilter, argsFilter, utilConfig);
-    private PrintStatisticsByType printStatisticsByType = new StatisticsPrinter(listsByTypes, utilConfig);
+    private ArgsFilter argsFilter = new FilterArgsAndDeleteFlags();
+    private ProcessFiles processFiles = new ValidateAndProcessFiles(listsByTypes, tempListsByTypes, dataTypeFilter);
+    private PrintStatisticsByType printStatisticsByType = new StatisticsPrinter(listsByTypes);
     private Proceed proceed = new Proceed(printStatisticsByType);
-    private WriteToFileByType writeToFileByType = new FileWriter(utilConfig);
+    private WriteToFileByType writeToFileByType = new FileWriter();
     private static Thread currentThread;
 
     public TempListsByTypes getTempListsByTypes() {
@@ -52,8 +50,6 @@ public class ApplicationStarter {
             try {
                 currentThread.join();
             } catch (InterruptedException e) {
-                System.err.println("Текущий поток был прерван во время ожидания завершения другого потока.");
-
                 Thread.currentThread().interrupt();
                 return;
             }
@@ -66,7 +62,6 @@ public class ApplicationStarter {
                 writeToFiles();
                 ifUserWantToProceed();
             } catch (InterruptedException e) {
-                System.err.println("Current stream was interrupted " + e.getMessage());
             }
         });
 
@@ -76,7 +71,7 @@ public class ApplicationStarter {
     public void ifUserWantToProceed() throws InterruptedException{
         boolean wantToProceed = proceed.checkIfProceedFilteringFiles();
         while(wantToProceed) {
-            System.out.println("Enter new fileNames to proceed filtering: ");
+            System.out.println("Enter new args to proceed filtering: ");
 
             NewArgs.deletePreviousArgsAndInputNew();
 
@@ -89,8 +84,6 @@ public class ApplicationStarter {
             });
             newThread.start();
             newThread.join();
-
-
 
             System.out.println("Added files was successfully filtered!");
             wantToProceed = proceed.checkIfProceedFilteringFiles();
