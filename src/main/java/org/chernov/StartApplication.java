@@ -1,6 +1,7 @@
 package org.chernov;
 
 import org.chernov.utils.DeleteDataAndRestartApp;
+import org.chernov.utils.FlagsConfig;
 import org.chernov.validation.FilesInArgsValidator;
 import org.chernov.starter.ApplicationStarter;
 import org.chernov.utils.ArgsAndListsByTypes;
@@ -17,6 +18,7 @@ public class StartApplication {
         if (ArgsAndListsByTypes.getArgs() == null || ArgsAndListsByTypes.getArgs().isEmpty()) {
             System.out.println("\n  Error: you entered a blank line!");
             System.out.println("\nTry to enter data one more time(separate args by space): ");
+            FlagsConfig.setAppend(false);
             DeleteDataAndRestartApp.deletePreviousArgsAndInputNew();
         }
 

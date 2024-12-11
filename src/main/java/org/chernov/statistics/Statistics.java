@@ -5,16 +5,16 @@ import org.chernov.utils.FlagsConfig;
 import java.util.Collections;
 
 
-public class StatisticsPrinter implements PrintStatisticsByType{
+public class Statistics implements PrintStatistics {
 
     private final ArgsAndListsByTypes listsByTypes;
 
-    public StatisticsPrinter(ArgsAndListsByTypes listsByTypes) {
+    public Statistics(ArgsAndListsByTypes listsByTypes) {
         this.listsByTypes = listsByTypes;
     }
 
     @Override
-    public void printStatisticsByType() {
+    public void printStatistics() {
         if (FlagsConfig.isShortStats()) {
             printShortStatistics();
         } else if (FlagsConfig.isFullStats()) {

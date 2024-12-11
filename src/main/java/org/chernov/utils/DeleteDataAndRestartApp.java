@@ -12,16 +12,18 @@ public class DeleteDataAndRestartApp {
 
     public static void deletePreviousArgsAndInputNew(){
 
-            ArgsAndListsByTypes.getArgs().clear();
-            FlagsConfig.setConfigToDefault();
+        ArgsAndListsByTypes.getArgs().clear();
+        ArgsAndListsByTypes.clearLists();
+        FlagsConfig.setConfigToDefault();
 
-            String newInput = scanner.nextLine();
-            String[] newArgs = newInput.split("\\s+");
-            ArgsAndListsByTypes.getArgs().addAll(Arrays.asList(newArgs));
-            FilesInArgsValidator.userErrorIfContainsFilesWithDifferentExtension(ArgsAndListsByTypes.getArgs());
+        String newInput = scanner.nextLine();
+        String[] newArgs = newInput.split("\\s+");
+        ArgsAndListsByTypes.getArgs().addAll(Arrays.asList(newArgs));
 
-            FilesInArgsValidator.userErrorIfNotContainsTxt(ArgsAndListsByTypes.getArgs());
-            ApplicationStarter.startApplication();
+        FilesInArgsValidator.userErrorIfContainsFilesWithDifferentExtension(ArgsAndListsByTypes.getArgs());
+        FilesInArgsValidator.userErrorIfNotContainsTxt(ArgsAndListsByTypes.getArgs());
+
+        ApplicationStarter.startApplication();
 
 
 

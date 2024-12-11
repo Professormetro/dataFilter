@@ -1,6 +1,7 @@
 package org.chernov.utils;
 
 public class FlagsConfig {
+
     private final static String DEFAULT_PREFIX = "";
     private final static String DEFAULT_PATH = ".";
 
@@ -14,7 +15,7 @@ public class FlagsConfig {
     public static void setConfigToDefault(){
         outputPath = DEFAULT_PATH;
         prefix = DEFAULT_PREFIX;
-        append = false;
+//        append = false;
         shortStats = false;
         fullStats = false;
     }

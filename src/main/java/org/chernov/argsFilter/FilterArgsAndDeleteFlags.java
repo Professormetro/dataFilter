@@ -18,6 +18,7 @@ public class FilterArgsAndDeleteFlags implements ArgsFilter {
                     if(i + 1 < args.size() && !FlagsInArgsValidator.checkIfRightOutputPath(args.get(i + 1))){
                         System.out.println("\n  Error: The output path is incorrect. Output path cannot be empty, starts with [/], ends with [.txt] or flags [-p, -o, -f, -s, -a].");
                         System.out.println("\nTry again with path in format [-o newDir/newDir] or [-o newDir]: ");
+                        FlagsConfig.setAppend(false);
                         DeleteDataAndRestartApp.deletePreviousArgsAndInputNew();
                         parseArgs(ArgsAndListsByTypes.getArgs());
 
@@ -32,6 +33,7 @@ public class FilterArgsAndDeleteFlags implements ArgsFilter {
                     if(i + 1 < args.size() && !FlagsInArgsValidator.checkIfRightPrefix(args.get(i + 1))){
                         System.out.println("\n  Error: The prefix is incorrect. Prefix cannot be empty, ends with .txt or flags(-p, -o, -f, -s, -a).");
                         System.out.println("\nTry again with correct prefix provided: ");
+                        FlagsConfig.setAppend(false);
                         DeleteDataAndRestartApp.deletePreviousArgsAndInputNew();
                         parseArgs(ArgsAndListsByTypes.getArgs());
 

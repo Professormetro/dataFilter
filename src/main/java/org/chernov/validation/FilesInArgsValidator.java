@@ -1,6 +1,8 @@
 package org.chernov.validation;
 
 import org.chernov.utils.DeleteDataAndRestartApp;
+import org.chernov.utils.FlagsConfig;
+
 import java.util.List;
 
 public class FilesInArgsValidator {
@@ -30,6 +32,7 @@ public class FilesInArgsValidator {
         if(!FilesInArgsValidator.containsTxtFile(args)){
             System.out.println("\n  Error: input data does not contains any .txt files: ");
             System.out.println("\nTry to enter data one more time(separate flags and fileNames by space): ");
+            FlagsConfig.setAppend(false);
             DeleteDataAndRestartApp.deletePreviousArgsAndInputNew();
         }
     }
@@ -41,6 +44,7 @@ public class FilesInArgsValidator {
         if(!fileNameIfContains.equals("NotContains")){
             System.err.println("\n  Error: File " + fileNameIfContains + " has incorrect extension, our app is working only with .txt files");
             System.out.println("\nTry to enter data one more time(separate flags and fileNames by space): ");
+            FlagsConfig.setAppend(false);
             DeleteDataAndRestartApp.deletePreviousArgsAndInputNew();
         }
     }

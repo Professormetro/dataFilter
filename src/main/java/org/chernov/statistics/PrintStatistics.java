@@ -1,8 +1,8 @@
 package org.chernov.statistics;
 
-public interface PrintStatisticsByType {
+public interface PrintStatistics {
 
-    void printStatisticsByType();
+    void printStatistics();
     void printShortStatistics();
     void printFullStatistics();
 

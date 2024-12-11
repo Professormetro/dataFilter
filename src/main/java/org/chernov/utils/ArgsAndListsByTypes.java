@@ -7,13 +7,19 @@ import java.util.List;
 public class ArgsAndListsByTypes {
 
     private static List<String> args = new ArrayList<>();
-    private List<Integer> integers = new ArrayList<>();
-    private List<Float> floats = new ArrayList<>();
-    private List<String> strings = new ArrayList<>();
+    private static List<Integer> integers = new ArrayList<>();
+    private static List<Float> floats = new ArrayList<>();
+    private static List<String> strings = new ArrayList<>();
 
     public static List<String> getArgs() {
         return args;
     }
+    public static void clearLists(){
+        integers.clear();
+        floats.clear();
+        strings.clear();
+    }
+
     public List<Integer> getIntegers() {
         return integers;
     }

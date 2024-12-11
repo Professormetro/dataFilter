@@ -28,8 +28,6 @@
 //        try (FileWriter writer = new FileWriter(testFile)) {
 //            writer.write("123\n456\nHello\n78.9\nWorld\n");
 //        }
-//
-//
 //        String[] args = {"-o", "output", "-p", "result_", testFile.getAbsolutePath()};
 //        StartApplication.main(args);
 //
@@ -51,7 +49,7 @@
 //        }
 //        new File(testDir).delete();
 //
-//        // Удаление выходных файлов (если необходимо)
+//
 //        new File("output").delete();
 //    }
 //}

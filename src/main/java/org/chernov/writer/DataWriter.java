@@ -5,6 +5,7 @@ import org.chernov.utils.FlagsConfig;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.nio.file.Files;
@@ -24,7 +25,7 @@ public class DataWriter implements WriteToFileByType {
         StringBuilder pathToFile = new StringBuilder();
         pathToFile.append(FlagsConfig.getOutputPath() + File.separator + FlagsConfig.getPrefix() + filename);
 
-        try (BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(pathToFile.toString(), FlagsConfig.isAppend()))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathToFile.toString(), FlagsConfig.isAppend()))) {
             for (Object item : data) {
                 writer.write(item.toString());
                 writer.newLine();
